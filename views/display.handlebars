@@ -1,0 +1,197 @@
+<!DOCTYPE html> 
+<html>
+
+        <head>
+                {{!-- <meta name="viewport" content="width=device-width,initial-scale=1.0"> --}}
+                <link rel="stylesheet" href="css/webix.css" type="text/css" charset="utf-8">
+                <script src="js/webix.js" type="text/javascript" charset="utf-8"></script>
+                <link rel="stylesheet" href="css/style.css" type="text/css"    charset="utf-8">
+                <script src="js/socket.io.dev.js"></script>
+                <script src="js/script.js"></script>
+                <script src="js/jquery.min.js"></script>
+                <script src="js/zepto.min.js"></script>
+                <link rel="stylesheet" href="css/vegas.min.css">
+                <script src="js/vegas.min.js"></script>
+
+ <style >
+                        
+ .wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header,footer {
+  height:100px;
+}
+
+main {
+  flex: 1;
+}
+
+// Rules below just for niceness
+body {
+  margin: 0,0,0,0;
+}
+
+header {
+  background-color: black;
+}
+
+main {
+  background-color:black;
+}
+
+footer {
+  background-color:black;
+  color:orange;
+}
+.webix_view,.webix_list{
+background-color: black;
+}
+.webix_list_item{
+        height:100px;
+        color: black;
+        background-color: orange;
+        border-bottom:2px solid black;
+          border-right:2px solid black;
+}
+                </style>
+        </head>
+
+        <body onload="startTime();" style="background-color:black;">
+
+                <div class="wrapper">
+                <header>
+                        <div id="logo" style="float:left; width:10%;"  onclick="requestFullScreen();">
+                                     <img src="logo.png" width="50%">
+                                </div>
+                                <div id="txt" align="right"   style="color:orange; font-size:2vw;">
+                                </div>
+                </header>
+                <main>
+                                 <div id="output" style="float:left;" >
+                                        <audio controls id="audio1" style="display:none;">
+                                                <source src="beep.mp3" type="audio/mpeg">
+                                        </audio>
+                                </div>
+                                <div id="content" style=" height:100%; align:center;">
+                                       
+                                </div>
+                </main>
+                <footer>
+                        <div class="marquee">
+                                <span id="marque"> </span>
+                        </div>
+						 <div id="timer" style="display:none"></div>
+                        </footer>
+                </div>
+                        <script type="text/javascript" charset="utf-8">
+ // document.addEventListener("contextmenu", function(e){
+  //  e.preventDefault();
+//}, false);
+  //  document.getElementById("audio1").volume = 1;
+
+var images;
+webix.ajax("/playlist/data", function(text, data, XmlHttpRequest){
+    images=JSON.parse(text);
+});
+setInterval(function(){
+ webix.ajax("/playlist/data", function(text, data, XmlHttpRequest){
+    images=JSON.parse(text);
+});
+},10000)
+
+
+
+var i=0;
+var timers=1000;
+let interval=setTimeout(function tick(){
+var src=images[i].src;
+if (images[i].checked==true){
+if (src.substr(-3)=="mp4")
+{
+document.getElementById("content").innerHTML="<video id='myvideo' width='70%' controls> <source src='"+images[i].src+"' type='video/mp4'></video>";
+webix.ajax().get("/sounds/player",function(text, data,){
+        data = data.json();  
+            console.log(parseInt(data.value)/100);
+   document.getElementById("myvideo").volume = parseInt(data.value)/100;
+  
+  });
+document.getElementById("myvideo").play();
+setTimeout(function(){var r=document.getElementById("myvideo").duration; interval=setTimeout(tick,r*1000);},1000)
+//interval=setTimeout(tick,parseInt(vid.duration*1000));
+}
+ else if(src.substr(-3)=="jpg" || src.substr(-3)=="png" ||src.substr(-3)=="jpeg"){
+document.getElementById("content").innerHTML="<img width='70%' src='"+src+"'>";
+interval=setTimeout(tick,parseInt(images[i].timer)*1000);
+}
+else {
+        document.getElementById("content").innerHTML="<iframe  height='100%'  width='70%' src='"+src+"' style='border:none;'></iframe>";
+        interval=setTimeout(tick,parseInt(images[i].timer)*1000);
+}
+}
+else{
+
+  interval=setTimeout(tick,100);
+}
+
+ if (i <images.length)i=i+1;
+ if (i==images.length)i=0;
+
+},timers);
+
+
+
+webix.ui({
+                container: 'timer',
+         view:"datatable", id:"order_timer",
+	scroll:false,
+	header:false,
+        height:50,
+        width:600,
+	columns:[
+		{id:"value", header:"Value",width:600},
+	],
+        url:"/delete_order_timer/data",
+        save:"rest->/delete_order_time/data"
+                });
+
+
+
+
+        webix.ui({
+                container: 'marque',
+         view:"datatable", id:"marqueess",
+	scroll:false,
+	header:false,
+        height:100,
+        width:2500,
+	columns:[
+		{id:"value", header:"Value",width:2500},
+	],
+        url:"/marque/data",
+        save:"rest->/marque/data"
+                });
+
+
+        var calculator = webix.ui({
+            container: 'output',
+            view:"list",
+            id:'mylist',
+            scroll:false,
+            width:500,
+            height:1000,
+                template:"<div style='text-align: center;margin-top:10px'> #title#<div>",
+                        type:{
+                                height:150
+                        },
+                data:[
+                ],
+        })
+                                        </script>
+                                        <audio autoplay="true" src="beep.mp3"></audio>
+                                        <script src="js/get_orders.js"></script>
+                                </body>
+
+                        </html>

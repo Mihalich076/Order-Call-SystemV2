@@ -1,0 +1,88 @@
+
+<div id='gates-container'></div>
+<div id='add_to_list'></div>
+
+<script>
+
+webix.i18n.parseFormat = "%c";
+webix.i18n.setLocale();
+
+var toolbar = {
+	view:"toolbar",
+	cols:[
+		{ view:"button", value:"UP", width:50, click:function(){
+			var item1= $$("gates").getSelectedItem();
+			var id_item2=$$("gates").getPrevId(item1.id,1);
+			var item2=$$("gates").getItem(id_item2);
+			var aux=item1.sort;
+			item1.sort=item2.sort;
+			item2.sort=aux;
+
+			$$("gates").moveUp(item1.id,1);
+				var data = $$("gates").serialize();
+			for (i=0; i<data.length; i++){
+		   webix.ajax().put("/playlist/data" ,data[i]);
+		   }
+		}},
+			{ view:"button", value:"Down", width:50, click:function(){
+		var item1= $$("gates").getSelectedItem();
+			var id_item2=$$("gates").getNextId(item1.id,1);
+			var item2=$$("gates").getItem(id_item2);
+			var aux=item1.sort;
+			item1.sort=item2.sort;
+			item2.sort=aux;
+			$$("gates").moveDown(item1.id,1);
+				var data = $$("gates").serialize();
+			for (i=0; i<data.length; i++){
+		   webix.ajax().put("/playlist/data/"+data[i].id+"" ,data[i]);
+		   }
+			
+		}},
+		{
+     view:"button",
+    label:'Add to Play list',
+    click:function(){
+
+var left = (screen.width/2)-(700/2);
+var top = (screen.height/2)-(500/2);
+return window.open('http://localhost:3000/filemanager/', 'title', 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+700+', height='+500+', top='+top+', left='+left);
+                            }
+        },
+		{ view:"button", value:"Add URL", width:120, click:function(){
+			$$("gates").add({})
+		}},
+		{ view:"button", value:"Delete Row", width:120, click:function(){
+			var rows = $$("gates").getSelectedId(true);
+			if (rows.length)
+				$$("gates").remove(rows);
+
+		}},
+	]
+};
+
+var gates = {
+	view:"datatable", id:"gates", select:true,
+	autoheight:true, scroll:false,
+	editable:true,
+	editaction: "dblclick",
+	columns:[
+
+	{ id:"src", header:"src" ,width:400,editor:'text'},
+	{ id:"timer", header:"Timer(sec)" , editor:'text',width:100},
+		{id:"checked", header:"Active", template:"{common.checkbox()}"},
+			{id:"sort", header:"Sort", editor:'text'},
+
+	],
+	url:"/playlist/data",
+	save:"rest->/playlist/data"
+};
+
+webix.ui({
+	width:730, type:"space",
+	container:"gates-container",
+	rows:[
+		toolbar, gates
+	]
+});
+
+</script>

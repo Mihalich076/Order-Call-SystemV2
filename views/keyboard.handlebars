@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+        <link rel="stylesheet" href="css/w3mobile.css">
+        <link rel="stylesheet" href="css/webix.1.css" type="text/css"  charset="utf-8">
+        <script src="js/webix.2.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+        <script src="js/socket.io.dev.js"></script>
+        <link rel="stylesheet" href="css/style.css" type="text/css"  charset="utf-8">
+         
+    </head>
+<style>
+
+</style>
+    <body style="font-family: Arial;">
+   <style>
+               .webix_list_item {
+                    
+                    height: 90px;
+                    font-size: 50px;
+                    text-align: center;
+                    padding-top: 40%;
+                    margin: auto;
+  	background-color:#eee;
+  }
+                    .webix_list.webix_list_item.webix_selected{
+  	background-color:#1995ad;
+       padding-top: 40%;
+     
+  }
+
+</style>
+        <p align="center" align="center"><img src="provider_logo.png" width="80%"></p>
+        <div style="display: flex;justify-content: center;">
+            <div id="calculator" style="margin-left:5%; margin-right:5%;">
+            </div>
+
+        </div>
+
+        <script type="text/javascript" charset="utf-8">
+      //  document.addEventListener("contextmenu", function(e){ e.preventDefault();}, false);
+        var textValue;
+        var win="0";
+        var scrool=0;
+        var calculator = webix.ui({
+            container: 'calculator',
+            css:"home_size",
+
+            cols: [
+                {
+                    rows: [
+                        {
+                            view: "text",
+                            disabled: true,
+                            id: 'text',
+                            left: 500,
+                            top: 160,
+                            width: 270,
+                            height: 90
+                        },
+                        {
+                            cols: [
+                                {
+                                    label: "7",
+                                    view: "button",
+                                    left: 500,
+                                    top: 260,
+                                    width: 90,
+                                    height: 90,
+                                    click: function () { $$('text').setValue($$('text').getValue() + "7"); }
+                                },
+                                {
+                                    label: "8",
+                                    view: "button",
+                                    left: 600,
+                                    top: 260,
+                                    width: 90,
+                                    height: 90,
+                                    click: function () { $$('text').setValue($$('text').getValue() + "8"); }
+                                },
+                                {
+                                    label: "9",
+                                    view: "button",
+                                    left: 700,
+                                    top: 260,
+                                    width: 90,
+                                    height: 90,
+                                    click: function () { $$('text').setValue($$('text').getValue() + "9"); }
+                                },
+                            ]
+
+                        },
+                        {
+                            cols: [
+                                {
+                                    label: "4",
+                                    view: "button",
+                                    left: 500,
+                                    top: 360,
+                                    width: 90,
+                                    height: 90,
+                                    click: function () { $$('text').setValue($$('text').getValue() + "4"); }
+                                },
+                                {
+                                    label: "5",
+                                    view: "button",
+                                    left: 600,
+                                    top: 360,
+                                    width: 90,
+                                    height: 90,
+                                    click: function () { $$('text').setValue($$('text').getValue() + "5"); }
+                                },
+                                {
+                                    label: "6",
+                                    view: "button",
+                                    left: 700,
+                                    top: 360,
+                                    width: 90,
+                                    height: 90,
+                                    click: function () { $$('text').setValue($$('text').getValue() + "6"); }
+                                },
+                            ]
+                        },
+                        {
+                            cols: [
+                                {
+                                    label: "1",
+                                    view: "button",
+                                    left: 500,
+                                    top: 460,
+                                    width: 90,
+                                    height: 90,
+                                    click: function () { $$('text').setValue($$('text').getValue() + "1"); }
+                                },
+                                {
+                                    label: "2",
+                                    view: "button",
+                                    left: 600,
+                                    top: 460,
+                                    width: 90,
+                                    height: 90,
+                                    click: function () { $$('text').setValue($$('text').getValue() + "2"); }
+                                },
+                                {
+                                    label: "3",
+                                    view: "button",
+                                    left: 700,
+                                    top: 460,
+                                    width: 90,
+                                    height: 90,
+                                    click: function () { $$('text').setValue($$('text').getValue() + "3"); }
+                                },
+                            ]
+                        },
+                        {
+                            cols: [
+                                {
+                                    label: "C",
+                                    view: "button",
+                                    left: 500,
+                                    top: 560,
+                                    width: 90,
+                                    height: 90,
+                                    click: function () { $$('text').setValue(""); }
+                                },
+                                {
+                                    label: "0",
+                                    view: "button",
+                                    left: 600,
+                                    top: 560,
+                                    width: 90,
+                                    height: 90,
+                                    click: function () { $$('text').setValue($$('text').getValue() + "0"); }
+                                },
+                                {
+                                    label: 'ok',
+                                    id: 'send',
+                                    view: "button",
+                                    type:'htmlbutton',
+                                    left: 700,
+                                    top: 560,
+                                    width: 90,
+                                    height: 90,
+                                    labelAlign: "left"
+                                },
+                            ]
+                        }
+                    ]
+                },
+                {
+                    rows:[
+                     {
+                            
+                            view: "button",
+                            type:"htmlbutton",
+                            //label:'sas',
+                           label:'<i class="fas fa-angle-up"></i>',
+                            left: 280,
+                            top: 200,
+                            width: 90,
+                            height: 90,
+                            click:function(){
+
+                                    if (scrool>=90){
+                                  scrool=scrool-90;
+                                   $$('mylist').scrollTo(0,scrool);
+                                    }
+
+                                  
+                            }
+                        },
+                    {
+                  view:"list",
+                  id:"mylist",
+                    width:90,
+                    height:265,
+              
+                    template:"#name#",
+                    select:true,
+                    type:{
+                             height:90,     
+                            },
+      },
+       {
+                           
+                            view: "button",
+                           type:"htmlbutton",
+                           //label:'ssd',
+                            label:'<i class="fas fa-angle-down"></i>',
+                            left: 280,
+                            top: 200,
+                            width: 90,
+                            height: 90,
+                            click:function(){
+
+                                  var first_element=parseInt($$('mylist').getFirstId());
+                                 var last_element=parseInt($$('mylist').getLastId());
+                                 var nr=last_element-first_element;
+                                 if (scrool<=nr*90-180){
+                                  scrool=scrool+90;
+                                   $$('mylist').scrollTo(0,scrool);
+                                 } if (scrool==nr*90) scrool=nr*90-270;
+                            }
+                        },
+
+                    ]
+                }
+            ]
+        })
+        $$('mylist').load("/gates/active_data");
+       $$("mylist").attachEvent("onAfterSelect", function(id, e, node){
+   var a = webix.ajax().stringify($$("mylist").getSelectedItem());
+    var b= JSON.parse(a);
+     win=b.name;});
+      
+        </script>
+
+        <script src="js/send_orders.js"></script>
+
+    </body>
+
+</html>

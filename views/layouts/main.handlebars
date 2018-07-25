@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/assets/styles.css">
+
+		<script type="text/javascript" src="js/webixadmin.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/webixadmin.css">
+		<script src="js/socket.io.dev.js"></script>
+	</head>
+	<body>
+		<h1 class='header'>
+			<a href="/dashboard">
+				<div></div>
+				DashBoard
+
+			</a>
+		</h1>
+		<div class='mainarea'>
+			<ul class='left'>
+				{{#each menu}}
+				<li><span>{{value}}</span><ul>
+						{{#each data}}
+						<li class='{{css}}'><a href='{{href}}'>{{value}}</a></li>
+						{{/each}}
+					</ul></li>
+				{{/each}}
+			</ul>
+			<content class="right">{{{body}}}</content>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,46 @@
+
+<div id='gates-container'></div>
+<script>
+
+webix.i18n.parseFormat = "%c";
+webix.i18n.setLocale();
+
+var toolbar = {
+	view:"toolbar",
+	cols:[
+		{ view:"button", value:"Add Row", width:120, click:function(){
+			$$("gates").add({name:"gates"
+			})
+		}},
+		{ view:"button", value:"Delete Row", width:120, click:function(){
+			var rows = $$("gates").getSelectedId(true);
+			if (rows.length)
+				$$("gates").remove(rows);
+
+		}},
+	]
+};
+
+var gates = {
+	view:"datatable", id:"gates", select:true,
+	autoheight:true, scroll:false,
+	editable:true,
+	columns:[
+	{ id:"id_", header:"ID" ,editor:"text"},
+	{ id:"name", header:"Name" ,editor:"text"},
+		{ id:"description", header:"description", editor:"text",width:275},
+		{id:"checked", header:"Active", template:"{common.checkbox()}"},
+
+	],
+	url:"/gates/data",
+	save:"rest->/gates/data"
+};
+
+webix.ui({
+	width:600, type:"space",
+	container:"gates-container",
+	rows:[
+		toolbar, gates
+	]
+});
+</script>

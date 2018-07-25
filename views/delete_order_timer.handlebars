@@ -1,0 +1,30 @@
+
+<div id='delete_order_timer-container'></div>
+<script src="js/socket.io.dev.js"></script>
+<script>
+
+webix.i18n.parseFormat = "%c";
+webix.i18n.setLocale();
+
+
+var marque = {
+	view:"datatable", id:"delete_order_timer", select:true,
+	autoheight:true, scroll:false,
+	editable:true,
+	columns:[
+	{ id:"name", header:"Name" ,width:200},
+		{ id:"value", header:"Value(sec)", editor:"text",width:180},
+	
+	],
+	url:"/delete_order_timer/data",
+	save:"rest->/delete_order_timer/data"
+};
+
+webix.ui({
+	width:400, type:"space",
+	container:"delete_order_timer-container",
+	rows:[
+		toolbar, marque
+	]
+});
+</script>

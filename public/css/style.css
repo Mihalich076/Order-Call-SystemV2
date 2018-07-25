@@ -1,0 +1,269 @@
+
+
+
+
+#myVideo {
+    /* position: fixed; */
+    width: 70%;
+    height: auto;
+    align: right;
+}
+
+@-webkit-keyframes scroll {
+    0% {
+        -webkit-transform: translate(0, 0);
+        transform: translate(0, 0);
+    }
+    100% {
+        -webkit-transform: translate(-100%, 0);
+        transform: translate(-100%, 0)
+    }
+}
+
+@-moz-keyframes scroll {
+    0% {
+        -moz-transform: translate(0, 0);
+        transform: translate(0, 0);
+    }
+    100% {
+        -moz-transform: translate(-100%, 0);
+        transform: translate(-100%, 0)
+    }
+}
+
+@keyframes scroll {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(-100%, 0)
+    }
+}
+
+.marquee {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    display: block;
+  
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: black;
+    color: orange;
+    font-size: 2vw;
+}
+
+.marquee span {
+    display: inline-block;
+    padding-left: 100%;
+    -webkit-animation: scroll 10s infinite linear;
+    -moz-animation: scroll 10s infinite linear;
+    animation: scroll 10s infinite linear;
+}
+
+h1, button {
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
+a:hover {
+    color: #2ecc71;
+}
+
+/*Button Three*/
+
+.button-three {
+    position: relative;
+    background-color: #f39c12;
+    border: none;
+    font-size: 50px;
+    padding: 20px;
+    margin: 3px;
+    width: 15%;
+    height: 25%;
+    text-align: center;
+    -webkit-transition-duration: 0.4s;
+    /* Safari */
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+.button-three:hover {
+    background: #fff;
+    box-shadow: 0px 2px 10px 5px #97B1BF;
+    color: #000;
+}
+
+.button-three:after {
+    content: "";
+    background: #f1c40f;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px !important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
+}
+
+.button-three:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+}
+
+input[type=text] {
+    width: 50%;
+    height: 100%;
+    font-size: 1.5em;
+    padding: 1px 20px;
+    /* margin: 8px 0; */
+    margin-bottom: 10px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #000;
+    background-color: white;
+}
+
+.webix_el_toggle .webix_el_box.webix_pressed .webix_el_toggle, .webix_el_toggle .webix_el_box.webix_pressed .webixtype_base {
+    background-color: green;
+}
+
+body {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: Arial;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.radio-tile-group {
+    /* display: flex; */
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.radio-tile-group .input-container {
+    position: relative;
+    height: 7rem;
+    width: 7rem;
+    margin: 0.5rem;
+}
+
+.radio-tile-group .input-container .radio-button {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    cursor: pointer;
+}
+
+.radio-tile-group .input-container .radio-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #f1c40f;
+    border-radius: 5px;
+    padding: 1rem;
+    transition: transform 300ms ease;
+}
+
+.radio-tile-group .input-container .icon svg {
+    fill: #f1c40f;
+    width: 3rem;
+    height: 3rem;
+}
+
+.radio-tile-group .input-container .radio-tile-label {
+    text-align: center;
+    font-size: 2vw;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #f1c40f;
+}
+
+.radio-tile-group .input-container .radio-button:checked+.radio-tile {
+    background-color: #f1c40f;
+    border: 2px solid #f1c40f;
+    color: white;
+    transform: scale(1.1, 1.1);
+}
+
+.radio-tile-group .input-container .radio-button:checked+.radio-tile .icon svg {
+    fill: white;
+    background-color: #f1c40f;
+}
+
+.radio-tile-group .input-container .radio-button:checked+.radio-tile .radio-tile-label {
+    color: white;
+    background-color: #f1c40f;
+}
+
+  
+  .top-container {
+    background-color: #f1f1f1;
+    padding: 30px;
+    text-align: center;
+  }
+  
+  .header {
+    padding: 10px 16px;
+    background: #555;
+    color: #f1f1f1;
+  }
+  
+  .content {
+    padding: 0px;
+  }
+  
+  .sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+  
+  .sticky + .content {
+    padding-top: 102px;
+  }
+.webix_view{
+    font-size: 60px;
+    text-align: center;
+   
+}
+.webix_view,.webix_list{
+    font-size: 80px;
+    text-align: center;
+}
+.home_size{
+    font-size: 30px;
+}
+.label1{
+    background-color: orange;
+}

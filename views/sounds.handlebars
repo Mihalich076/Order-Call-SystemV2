@@ -1,0 +1,89 @@
+
+<div id='gates-container'></div>
+<div id='sound-container'></div>
+<script>
+
+webix.i18n.parseFormat = "%c";
+webix.i18n.setLocale();
+var volume;
+
+ //console.log(volume);
+webix.ui({
+	container:"gates-container",
+	rows:[
+
+	{   
+	 min: 0,
+        max: 100,
+		id:"slider1",
+        view: "slider",
+		label:"Order",
+        left: 420,
+        top: 210,
+        width: 400,	
+	},
+	{   
+	 min: 0,
+        max: 100,
+		id:"slider2",
+        view: "slider",
+		label:"Playlist",
+        left: 420,
+        top: 210,
+        width: 400,	
+	},
+
+     ]  
+
+});
+$$("slider1").attachEvent("onChange", function(newv, oldv){
+	webix.ajax().get("/sounds/order",function(text, data,){
+	  data = data.json();
+	  data.value=$$("slider1").getValue();
+	  console.log(data.value);
+   webix.ajax().put("/sounds/data/"+data.id+"",data);
+
+});
+});
+ webix.ajax().get("/sounds/order",function(text, data,){
+	  data = data.json();
+	  console.log
+ $$('slider1').setValue(parseInt(data.value));
+
+});
+
+$$("slider2").attachEvent("onChange", function(newv, oldv){
+	webix.ajax().get("/sounds/player",function(text, data,){
+	  data = data.json();
+	  data.value=$$("slider2").getValue();
+	  console.log(data.value);
+   webix.ajax().put("/sounds/data/"+data.id+"",data);
+
+});
+});
+ webix.ajax().get("/sounds/player",function(text, data,){
+	  data = data.json();
+	  console.log
+ $$('slider2').setValue(parseInt(data.value));
+
+});
+var logo = webix.ui({
+			view:"form",
+	width: 640,
+	container:"sound-container",
+	rows:[
+		{ margin:15, cols:[
+			{ rows:[
+				{ view:"uploader", multiple:false, name:"upfile", value:"Attach Order Sound", link:"mylist1", upload:"/upload_sound" },
+				{ view:"list",  id:"mylist1",  type:"uploader", autoheight:true, borderless:true }
+			]}
+		]},
+		{ view:"button", value:"Save", click:function(){
+			var data = this.getFormView().getValues();
+		
+		 webix.message("Sound Saved");
+		}},
+		
+	]	
+			});
+</script>

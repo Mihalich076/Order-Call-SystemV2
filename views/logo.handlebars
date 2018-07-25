@@ -1,0 +1,26 @@
+
+<div id='logo-container'>
+
+</div>
+
+<script>
+var logo = webix.ui({
+			view:"form",
+	width: 640,
+	container:"logo-container",
+	rows:[
+		{ margin:15, cols:[
+			{ rows:[
+				{ view:"uploader", multiple:false, name:"upfile", value:"Attach File", link:"mylist1", upload:"/upload_logo" },
+				{ view:"list",  id:"mylist1",  type:"uploader", autoheight:true, borderless:true }
+			]}
+		]},
+		{ view:"button", value:"Save", click:function(){
+			var data = this.getFormView().getValues();
+		
+		 webix.message("Logo Saved");
+		}},
+		
+	]	
+			});
+</script>

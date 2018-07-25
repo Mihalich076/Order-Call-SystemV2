@@ -1,0 +1,30 @@
+
+<div id='marque-container'></div>
+    <script src="js/socket.io.dev.js"></script>
+<script>
+
+webix.i18n.parseFormat = "%c";
+webix.i18n.setLocale();
+
+
+var marque = {
+	view:"datatable", id:"marque", select:true,
+	autoheight:true, scroll:false,
+	editable:true,
+	columns:[
+	{ id:"name", header:"Name" ,},
+		{ id:"value", header:"Value", editor:"text",width:275},
+	
+	],
+	url:"/marque/data",
+	save:"rest->/marque/data"
+};
+
+webix.ui({
+	width:400, type:"space",
+	container:"marque-container",
+	rows:[
+		toolbar, marque
+	]
+});
+</script>

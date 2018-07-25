@@ -1,0 +1,43 @@
+
+<div id='users-container'></div>
+<script>
+
+webix.i18n.parseFormat = "%c";
+webix.i18n.setLocale();
+
+var toolbar = {
+	view:"toolbar",
+	cols:[
+		{ view:"button", value:"Add Row", width:120, click:function(){
+			$$("users").add({})
+		}},
+		{ view:"button", value:"Delete Row", width:120, click:function(){
+			var rows = $$("users").getSelectedId(true);
+			if (rows.length)
+				$$("users").remove(rows);
+
+		}},
+	]
+};
+
+var users = {
+	view:"datatable", id:"users", select:true,
+	autoheight:true, scroll:false,
+	editable:true,
+	columns:[
+		{ id:"username", header:"User Name", editor:"text"},
+		{ id:"password", header:"Password", editor:"text"},
+	
+	],
+	url:"/users/data",
+	save:"rest->/users/data"
+};
+
+webix.ui({
+	width:300, type:"space",
+	container:"users-container",
+	rows:[
+		toolbar, users
+	]
+});
+</script>
